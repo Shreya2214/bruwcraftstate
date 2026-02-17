@@ -32,20 +32,20 @@ export function LocationTag({ city = "San Francisco", country = "USA", timezone 
     <button
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative flex items-center gap-3 rounded-full border border-border/60 bg-secondary/50 px-4 py-2.5 transition-all duration-500 ease-out hover:border-foreground/20 hover:bg-secondary/80 hover:shadow-[0_0_20px_rgba(0,0,0,0.04)]"
+      className="group relative flex items-center gap-3 rounded-full border border-copper/30 bg-copper/10 px-4 py-2.5 transition-all duration-500 ease-out hover:border-copper/50 hover:bg-copper/20 hover:shadow-[0_0_20px_rgba(193,122,63,0.2)]"
     >
       {/* Live pulse indicator */}
       <div className="relative flex items-center justify-center">
         <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-copper opacity-75" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-copper" />
         </span>
       </div>
 
       {/* Location text */}
       <div className="flex items-center gap-2 overflow-hidden">
         <span
-          className="text-sm font-medium text-foreground transition-all duration-500"
+          className="text-sm font-medium text-cream transition-all duration-500"
           style={{
             transform: isHovered ? "translateY(-100%)" : "translateY(0)",
             opacity: isHovered ? 0 : 1,
@@ -55,7 +55,7 @@ export function LocationTag({ city = "San Francisco", country = "USA", timezone 
         </span>
 
         <span
-          className="absolute left-11 text-sm font-medium text-foreground transition-all duration-500"
+          className="absolute left-11 text-sm font-medium text-cream transition-all duration-500"
           style={{
             transform: isHovered ? "translateY(0)" : "translateY(100%)",
             opacity: isHovered ? 1 : 0,
@@ -67,7 +67,7 @@ export function LocationTag({ city = "San Francisco", country = "USA", timezone 
 
       {/* Arrow indicator */}
       <svg
-        className="h-3 w-3 text-muted-foreground transition-all duration-300"
+        className="h-3 w-3 text-copper/60 transition-all duration-300"
         style={{
           transform: isHovered ? "translateX(2px) rotate(-45deg)" : "translateX(0) rotate(0)",
           opacity: isHovered ? 1 : 0.5,
