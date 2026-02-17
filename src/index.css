@@ -192,3 +192,7 @@
   90% { opacity: 0.15; }
   100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
 }
+
+/* Hide scrollbar for timeline */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

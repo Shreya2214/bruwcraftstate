@@ -1,9 +1,11 @@
 import { useState } from "react";
 import coffeeBag from "@/assets/coffee-bag.png";
 import FloatingBeans from "./FloatingBeans";
+import QRModal from "./QRModal";
 
 const HeroSection = () => {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [qrOpen, setQrOpen] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -32,17 +34,16 @@ const HeroSection = () => {
           {/* Left: Content */}
           <div className="flex-1 text-center lg:text-left" style={{ animation: "fade-up 1s ease-out" }}>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-tight mb-6 text-cream">
-              You Deserve to Know{" "}
-              <span className="text-gradient italic">Your Coffee.</span>
+              Single-Origin Indian Coffee.{" "}
+              <span className="text-gradient italic">Traceable to a Farm.</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mb-10 font-body leading-relaxed mx-auto lg:mx-0">
-              Single-origin Indian specialty coffee. Traceable to a named farm.
-              Transparent pricing. No guessing.
+              Known origin. Named growers. Pure transparency.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a href="#transparency" className="glow-button text-center text-lg">
-                Explore the Estate
-              </a>
+              <button onClick={() => setQrOpen(true)} className="glow-button text-center text-lg">
+                Scan QR for Coffee Details
+              </button>
               <a href="#value" className="ghost-button text-center text-lg">
                 How is this ₹650 worth it?
               </a>
@@ -78,6 +79,7 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+      <QRModal open={qrOpen} onClose={() => setQrOpen(false)} />
     </section>
   );
 };

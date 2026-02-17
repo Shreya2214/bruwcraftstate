@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import OriginTimeline from "@/components/OriginTimeline";
 import TransparencySection from "@/components/TransparencySection";
+import FlavorWheel from "@/components/FlavorWheel";
 import ValueSection from "@/components/ValueSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import StarterKitSection from "@/components/StarterKitSection";
@@ -12,7 +14,9 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <HeroSection />
+      <OriginTimeline />
       <TransparencySection />
+      <FlavorWheel />
       <ValueSection />
       <TestimonialsSection />
       <StarterKitSection />
