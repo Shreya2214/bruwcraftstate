@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { LocationTag } from "./ui/location-tag";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -16,9 +17,12 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-        <a href="#" className="font-display text-xl text-cream font-bold">
-          BruwCraft
-        </a>
+        <div className="flex items-center gap-4">
+          <a href="#" className="font-display text-xl text-cream font-bold">
+            BruwCraft
+          </a>
+          <LocationTag city="Bangalore" country="India" timezone="IST" />
+        </div>
         <div className="hidden md:flex items-center gap-8">
           <a href="#transparency" className="text-muted-foreground font-body text-sm link-hover hover:text-cream transition-colors">
             Origin
