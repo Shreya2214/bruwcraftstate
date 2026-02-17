@@ -1,120 +1,139 @@
+"use client";
+
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useScrollReveal } from "./useScrollReveal";
 
+// Flavor data - percentages
 const flavors = [
-  { name: "Citrus", pct: 18, color: "30 60% 55%", desc: "Bright, zesty notes of orange peel and lemon — a clean, vibrant acidity." },
-  { name: "Chocolate", pct: 30, color: "24 40% 30%", desc: "Deep, bittersweet dark chocolate from the medium roast development." },
-  { name: "Nut", pct: 22, color: "30 45% 42%", desc: "Warm hazelnut and almond notes — smooth, rounded, and comforting." },
-  { name: "Bloom", pct: 15, color: "340 30% 45%", desc: "Delicate jasmine and honeysuckle aromatics that bloom with each sip." },
-  { name: "Acidity", pct: 15, color: "45 50% 50%", desc: "Well-balanced, wine-like acidity that lifts the cup without sharpness." },
+  { value: 30, label: "Chocolate", desc: "Deep, bittersweet dark chocolate from the medium roast development." },
+  { value: 22, label: "Nutty", desc: "Warm hazelnut and almond notes — smooth, rounded, and comforting." },
+  { value: 18, label: "Citrus", desc: "Bright, zesty notes of orange peel and lemon — clean, vibrant acidity." },
+  { value: 15, label: "Floral", desc: "Delicate jasmine and honeysuckle aromatics that bloom with each sip." },
+  { value: 15, label: "Acidity", desc: "Well-balanced, wine-like acidity that lifts the cup without sharpness." },
 ];
+
+const FlavorBar = ({
+  value,
+  label,
+  delay,
+  isActive,
+  onClick,
+}: {
+  value: number;
+  label: string;
+  delay: number;
+  isActive: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <div 
+      className="group relative flex flex-col items-center cursor-pointer" 
+      onClick={onClick}
+    >
+      {/* Bar container */}
+      <div className="relative w-16 sm:w-20 h-64 sm:h-80 flex items-end">
+        {/* Background track */}
+        <div className="absolute inset-0 rounded-2xl bg-card/30" />
+        
+        {/* Animated bar */}
+        <motion.div
+          initial={{ height: "0%" }}
+          animate={{ height: `${value}%` }}
+          transition={{ duration: 1, type: "spring", damping: 20, delay }}
+          className={`relative w-full rounded-2xl flex items-start justify-center overflow-hidden ${
+            isActive 
+              ? "bg-gradient-to-t from-copper to-copper" 
+              : "bg-gradient-to-t from-copper/80 to-copper/50"
+          }`}
+        >
+          {/* Shine effect */}
+          <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white/20 to-transparent" />
+          
+          {/* Value label on top of bar */}
+          <span className="absolute top-3 font-display text-sm font-bold text-white drop-shadow-md">
+            {value}%
+          </span>
+        </motion.div>
+      </div>
+
+      {/* Label below bar */}
+      <p className={`mt-4 font-body text-sm font-medium transition-colors ${
+        isActive ? "text-copper" : "text-muted-foreground"
+      }`}>
+        {label}
+      </p>
+    </div>
+  );
+};
 
 const FlavorWheel = () => {
   const { ref, isVisible } = useScrollReveal();
   const [activeFlavor, setActiveFlavor] = useState<number | null>(null);
 
-  const buildPath = (index: number) => {
-    const startAngle = flavors.slice(0, index).reduce((s, f) => s + (f.pct / 100) * 360, 0) - 90;
-    const sweep = (flavors[index].pct / 100) * 360;
-    const r = 90;
-    const cx = 100, cy = 100;
-    const x1 = cx + r * Math.cos((startAngle * Math.PI) / 180);
-    const y1 = cy + r * Math.sin((startAngle * Math.PI) / 180);
-    const x2 = cx + r * Math.cos(((startAngle + sweep) * Math.PI) / 180);
-    const y2 = cy + r * Math.sin(((startAngle + sweep) * Math.PI) / 180);
-    const largeArc = sweep > 180 ? 1 : 0;
-    const midAngle = startAngle + sweep / 2;
-    const labelR = 62;
-    const lx = cx + labelR * Math.cos((midAngle * Math.PI) / 180);
-    const ly = cy + labelR * Math.sin((midAngle * Math.PI) / 180);
-    return { path: `M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${largeArc},1 ${x2},${y2} Z`, lx, ly };
-  };
-
   return (
     <section className="section-padding relative" ref={ref}>
-      <div className="max-w-4xl mx-auto">
-        <h2
-          className={`text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-center text-cream mb-4 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mx-auto max-w-2xl text-center mb-16"
         >
-          Flavor <span className="text-gradient italic">Experience</span>
-        </h2>
-        <p
-          className={`text-muted-foreground text-center mb-12 text-lg font-body transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          Explore what you'll taste in every cup.
-        </p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-cream mb-4">
+            Flavor <span className="text-gradient italic">Experience</span>
+          </h2>
+          <p className="text-muted-foreground text-lg font-body">
+            Explore what you'll taste in every cup.
+          </p>
+        </motion.div>
 
-        <div
-          className={`flex flex-col items-center gap-8 transition-all duration-700 delay-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+        {/* Bars container */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex items-end justify-center gap-4 sm:gap-6 px-4"
         >
-          <div className="relative w-64 h-64 sm:w-80 sm:h-80">
-            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg">
-              {flavors.map((f, i) => {
-                const { path, lx, ly } = buildPath(i);
-                const isActive = activeFlavor === i;
-                return (
-                  <g
-                    key={f.name}
-                    onClick={() => setActiveFlavor(isActive ? null : i)}
-                    className="cursor-pointer"
-                  >
-                    <path
-                      d={path}
-                      fill={`hsl(${f.color})`}
-                      stroke="hsl(var(--background))"
-                      strokeWidth="1.5"
-                      className="transition-all duration-300 hover:brightness-125"
-                      style={{
-                        transform: isActive ? "scale(1.05)" : "scale(1)",
-                        transformOrigin: "100px 100px",
-                        filter: isActive ? "brightness(1.3)" : undefined,
-                      }}
-                    />
-                    <text
-                      x={lx}
-                      y={ly}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      className="fill-cream font-body text-[8px] sm:text-[9px] pointer-events-none font-medium"
-                    >
-                      {f.name}
-                    </text>
-                  </g>
-                );
-              })}
-              <circle cx="100" cy="100" r="32" fill="hsl(var(--background))" stroke="hsl(var(--border))" strokeWidth="1" />
-              <text x="100" y="96" textAnchor="middle" className="fill-copper font-display text-[10px] font-bold">
-                Taste
-              </text>
-              <text x="100" y="108" textAnchor="middle" className="fill-muted-foreground font-body text-[7px]">
-                Profile
-              </text>
-            </svg>
-          </div>
+          {flavors.map((flavor, index) => (
+            <FlavorBar
+              key={flavor.label}
+              value={flavor.value}
+              label={flavor.label}
+              delay={0.3 + index * 0.1}
+              isActive={activeFlavor === index}
+              onClick={() => setActiveFlavor(activeFlavor === index ? null : index)}
+            />
+          ))}
+        </motion.div>
 
-          <div className="w-full max-w-md min-h-[80px]">
-            {activeFlavor !== null ? (
-              <div className="glass-card p-6 text-center" style={{ animation: "fade-up 0.3s ease-out" }}>
-                <p className="text-copper font-display text-lg font-semibold mb-2">
-                  {flavors[activeFlavor].name} · {flavors[activeFlavor].pct}%
-                </p>
-                <p className="text-foreground/80 font-body text-sm leading-relaxed">
-                  {flavors[activeFlavor].desc}
-                </p>
-              </div>
-            ) : (
-              <p className="text-center text-muted-foreground font-body text-sm py-6">
-                Tap any wedge to explore the flavor.
+        {/* Active flavor description - shown below all bars */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="mt-16 text-center"
+        >
+          {activeFlavor !== null ? (
+            <motion.div
+              key={activeFlavor}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="glass-card p-6 inline-block max-w-lg"
+            >
+              <p className="text-copper font-display text-lg font-semibold">
+                {flavors[activeFlavor].label} · {flavors[activeFlavor].value}%
               </p>
-            )}
-          </div>
-        </div>
+              <p className="text-foreground/80 font-body text-sm mt-2">
+                {flavors[activeFlavor].desc}
+              </p>
+            </motion.div>
+          ) : (
+            <p className="text-muted-foreground font-body text-sm">
+              Click any bar to explore the flavor profile.
+            </p>
+          )}
+        </motion.div>
       </div>
     </section>
   );
