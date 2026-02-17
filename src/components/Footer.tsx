@@ -1,25 +1,38 @@
-const links = ["About", "Transparency", "Brewing Guide", "Contact", "Instagram"];
+"use client";
 
-const Footer = () => (
-  <footer className="px-6 py-12 md:px-12 lg:px-24 border-t border-border">
-    <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-      <p className="font-display text-xl text-cream font-semibold">BruwCraft</p>
-      <nav className="flex flex-wrap gap-6 justify-center">
-        {links.map((link) => (
-          <a
-            key={link}
-            href="#"
-            className="text-muted-foreground font-body text-sm link-hover hover:text-cream transition-colors duration-300"
-          >
-            {link}
-          </a>
-        ))}
-      </nav>
-      <p className="text-muted-foreground/50 font-body text-xs">
-        © 2026 BruwCraft. All rights reserved.
-      </p>
-    </div>
-  </footer>
-);
+import { Footer } from "@/components/ui/modem-animated-footer";
+import { Coffee, Instagram, Mail } from "lucide-react";
 
-export default Footer;
+export default function FooterDemo() {
+  const socialLinks = [
+    {
+      icon: <Instagram className="w-6 h-6" />,
+      href: "https://instagram.com",
+      label: "Instagram",
+    },
+    {
+      icon: <Mail className="w-6 h-6" />,
+      href: "mailto:hello@bruwcraft.com",
+      label: "Email",
+    },
+  ];
+
+  const navLinks = [
+    { label: "About", href: "#" },
+    { label: "Transparency", href: "#" },
+    { label: "Brewing Guide", href: "#" },
+    { label: "Contact", href: "#" },
+  ];
+
+  return (
+    <Footer
+      brandName="BruwCraft"
+      brandDescription="Artisanal small-batch coffee roasted with precision. Experience the perfect brew crafted for coffee enthusiasts."
+      socialLinks={socialLinks}
+      navLinks={navLinks}
+      creatorName="BruwCraft"
+      creatorUrl="https://bruwcraft.com"
+      brandIcon={<Coffee className="w-8 sm:w-10 md:w-14 h-8 sm:h-10 md:h-14 text-background drop-shadow-lg" />}
+    />
+  );
+}
