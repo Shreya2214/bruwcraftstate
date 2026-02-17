@@ -42,10 +42,10 @@ const HeroSection = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button onClick={() => setQrOpen(true)} className="glow-button text-center text-lg">
-                Scan QR for Coffee Details
+                Scan QR
               </button>
               <a href="#value" className="ghost-button text-center text-lg">
-                How is this ₹650 worth it?
+                ₹650 worth it?
               </a>
             </div>
           </div>
